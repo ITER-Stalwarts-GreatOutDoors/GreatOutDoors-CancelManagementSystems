@@ -1,40 +1,45 @@
 package com.cg.iter.greatoutdoorscms.service;
 
-import java.util.List;
-import java.util.Optional;
+
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.cg.iter.greatoutdoorscms.dto.CancelDTO;
 import com.cg.iter.greatoutdoorscms.dto.OrderDTO;
-import com.cg.iter.greatoutdoorscms.dto.OrderProductMapDTO;
-import com.cg.iter.greatoutdoorscms.exception.OrderNotFoundException;
 import com.cg.iter.greatoutdoorscms.repository.CancelRepository;
-import com.cg.iter.greatoutdoorscms.repository.OrderRepository;
+
 
 @Service
 public class CancelServiceImpl  implements CancelService{
 	
+	
+	
+	@Autowired
+	RestTemplate rest;
+	
 	@Autowired
 	CancelRepository cancelRepositoty;
     @Autowired
-	OrderRepository orderRepository;
+    
+    private String orderProductURL = "http://add-to-cart-service/cart";
+
    
     
 	@Override
-	public String cancelOrder(CancelDTO cancel) {
-		@SuppressWarnings("unused")
-		OrderDTO order = null;
-		@SuppressWarnings("unused")
-		OrderProductMapDTO opm = null;
-		List<OrderProductMapDTO> list = null;
-		String statusOrderCancel = null;
-		System.out.println("Cancelling of order is being processed");
-		return statusOrderCancel;
-		else if (OrderRepository.findby() == null) {
-			throw new OrderNotFoundException("No such order id exists");
-
+	public String cancelOrder(OrderDTO order) {
+		
+		rest.postForObject(orderProductURL+"/cancelOrder", order, OrderDTO.class);
+		
+		long millis=System.currentTimeMillis();  
+		
+		Date currentDate = new java.util.Date(millis);  
+		
+		cancelRepositoty.save(new CancelDTO(order.getOrderId(), order.getUserId(), (java.sql.Date) currentDate));
+		
+		return "cancelled successfully!!";
 	}
 
 	@Override
