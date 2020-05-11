@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,10 +23,10 @@ public class CancelController
 	@Autowired
 	private CancelService cancelService;
 	
-		@PostMapping("/cancelOrder")
-		public String cancelOrder(@RequestBody OrderDTO order) throws Exception {
-			return cancelService.cancelOrder(order);
-		}
+	@PostMapping("/cancelOrder")
+	public String cancelOrder(@RequestParam String orderId , @RequestParam String userId) throws Exception {
+		return cancelService.cancelOrder(orderId,userId);
+	}
 
 	
 	@PostMapping("/Cancel-product")

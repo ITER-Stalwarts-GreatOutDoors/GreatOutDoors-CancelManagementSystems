@@ -1,30 +1,12 @@
 package com.cg.iter.greatoutdoorscms.dto;
 
-import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "cart")
-@IdClass(CartDTO.class)
-public class CartDTO implements Serializable{
 
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@Column(name = "retailer_id" , nullable = false)
+public class CartDTO{
+
 	private String userId;
-	@Id
-	@Column(name = "product_id" , nullable = false )
 	private String productId;
-	@Column(name = "quantity" , nullable = false )
 	private int quantity;
 	
 	public CartDTO() {}

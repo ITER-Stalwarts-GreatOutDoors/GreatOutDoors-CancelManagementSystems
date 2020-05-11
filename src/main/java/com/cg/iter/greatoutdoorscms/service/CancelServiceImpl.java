@@ -2,13 +2,18 @@ package com.cg.iter.greatoutdoorscms.service;
 
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.cg.iter.greatoutdoorscms.beans.Orders;
 import com.cg.iter.greatoutdoorscms.dto.CancelDTO;
-import com.cg.iter.greatoutdoorscms.dto.OrderDTO;
+import com.cg.iter.greatoutdoorscms.dto.OrderProductMapDTO;
 import com.cg.iter.greatoutdoorscms.repository.CancelRepository;
 
 
@@ -22,30 +27,70 @@ public class CancelServiceImpl  implements CancelService{
 	
 	@Autowired
 	CancelRepository cancelRepositoty;
-    @Autowired
-    
-    private String orderProductURL = "http://add-to-cart-service/cart";
-
    
     
+    private String orderProductURL = "http://add-to-cart-service/order";
+
+    
 	@Override
-	public String cancelOrder(OrderDTO order) {
-		
-		rest.postForObject(orderProductURL+"/cancelOrder", order, OrderDTO.class);
+	public String cancelOrder(String orderId , String userId) {
 		
 		long millis=System.currentTimeMillis();  
+		Date currentDate = new java.util.Date(millis);
 		
-		Date currentDate = new java.util.Date(millis);  
+		Orders orders = rest.getForObject(orderProductURL+"/getOrders/byOrderId?orderId="+orderId, Orders.class);
+		List<OrderProductMapDTO> list = orders.getOrders();
+		Iterator<OrderProductMapDTO> itr = list.iterator();
+		int index = 0;
 		
-		cancelRepositoty.save(new CancelDTO(order.getOrderId(), order.getUserId(), (java.sql.Date) currentDate));
 		
-		return "cancelled successfully!!";
+		while (itr.hasNext()) {
+			
+			CancelDTO cancelOrder = new CancelDTO( orderId,userId, list.get(index).getProductId(),
+					list.get(index).getProductUIN(), currentDate, 0);
+			cancelRepositoty.save(cancelOrder);
+			index++;
+			itr.next();
+		}
+		
+		
+		MultiValueMap<String, String> parametersMap = new LinkedMultiValueMap<String, String>();
+		parametersMap.add("orderId", orderId);
+
+		
+		return rest.postForObject(orderProductURL+"/cancelOrder", parametersMap, String.class);
+
+		
 	}
 
 	@Override
 	public String cancelProduct(String orderId, String userId, String productId, int quantity) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		long millis=System.currentTimeMillis();  
+		Date currentDate = new java.util.Date(millis);
+		
+		Orders orders = rest.getForObject(orderProductURL+"/getOrders/byOrderIdProductId?orderId="+orderId+"&productId="+productId, Orders.class);
+		List<OrderProductMapDTO> list = orders.getOrders();
+		Iterator<OrderProductMapDTO> itr = list.iterator();
+		int index = 0;
+		
+		
+		while (itr.hasNext()) {
+			
+			CancelDTO cancelOrder = new CancelDTO( orderId,userId, list.get(index).getProductId(),
+					list.get(index).getProductUIN(), currentDate, 0);
+			cancelRepositoty.save(cancelOrder);
+			index++;
+			itr.next();
+		}
+		
+		
+		MultiValueMap<String, String> parametersMap = new LinkedMultiValueMap<String, String>();
+		parametersMap.add("orderId", orderId);
+		parametersMap.add("productId", productId);
+
+		
+		return rest.postForObject(orderProductURL+"/cancelProduct", parametersMap, String.class);
 	}
 
 }

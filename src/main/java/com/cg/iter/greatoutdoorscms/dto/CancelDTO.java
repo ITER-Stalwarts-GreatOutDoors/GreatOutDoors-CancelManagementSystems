@@ -1,7 +1,10 @@
 package com.cg.iter.greatoutdoorscms.dto;
 
-import java.sql.Date;
 
+
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,26 +12,48 @@ import javax.persistence.Table;
 @Table (name="Cancel_table")
 public class CancelDTO
 {
-	@Id
+
 	private String orderid;
 	private String userId;
+	@Column(name = "product_id")
+	private String productid;
+	
+	@Id
+	@Column(name = "product_uin")
+	private String productuin;
 	private Date ordercanceltime;
+	
+	
+	@Column(name = "order_cancel_status", unique = false, length = 1)
+	private int ordercancelstatus;
+	
 	public CancelDTO() {}
-	public CancelDTO(String orderid, String userId ,Date ordercanceltime) {
-		super();
+	
+	
+	public CancelDTO(String orderid, String userId, String productid, String productuin, Date ordercanceltime,
+			int ordercancelstatus) {
+
 		this.orderid = orderid;
 		this.userId = userId;
+		this.productid = productid;
+		this.productuin = productuin;
 		this.ordercanceltime = ordercanceltime;
+		this.ordercancelstatus = ordercancelstatus;
 	}
+
+	
 	public String getOrderid() {
 		return orderid;
 	}
+	
 	public void setOrderid(String orderid) {
 		this.orderid = orderid;
 	}
+	
 	public String getUserId() {
 		return userId;
 	}
+	
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
@@ -36,6 +61,7 @@ public class CancelDTO
 	public Date getOrdercanceltime() {
 		return ordercanceltime;
 	}
+	
 	public void setOrdercanceltime(Date ordercanceltime) {
 		this.ordercanceltime = ordercanceltime;
 	}

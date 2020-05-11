@@ -8,7 +8,7 @@ public interface CancelService
 	/*
 	 * 
 	 */
-	String cancelOrder(OrderDTO order) ;
+	String cancelOrder(String orderId , String userId) ;
     /*
      * 
      */

@@ -2,28 +2,17 @@ package com.cg.iter.greatoutdoorscms.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 
-@Entity
-@Table(name = "order_table")
+
 public class OrderDTO {
 
-	@Id
-	@Column(name = "order_id" ,nullable = false)
+	
 	private String orderId;
-	@Column(name = "retailer_id" ,nullable = false)
 	private String userId;
-	@Column(name = "address_id" ,nullable = false)
 	private String addressId;
-	@Column(name = "order_dispatch_status" ,nullable = false)
 	private byte orderDispatchStatus;
-	@Column(name = "order_initiate_time")
 	private Date orderInitiateTime;
-	@Column(name = "order_dispatch_time")
 	private Date orderDispatchTime;
 	
 	public OrderDTO() {}
