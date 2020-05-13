@@ -52,7 +52,7 @@ public class OrderDTO {
 		this.addressId = addressId;
 	}
 
-	public byte getOrderDispatchStatus() {
+	public  byte getOrderDispatchStatus() {
 		return orderDispatchStatus;
 	}
 

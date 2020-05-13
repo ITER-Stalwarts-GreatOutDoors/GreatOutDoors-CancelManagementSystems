@@ -6,7 +6,7 @@ package com.cg.iter.greatoutdoorscms.dto;
 public class OrderProductMapDTO {
 
 	private String productUIN;
-	private String orderId;
+	private  String orderId;
 	private String productId;
 	private int productStatus;
 	private int giftStatus;
@@ -30,7 +30,7 @@ public class OrderProductMapDTO {
 		this.productUIN = productUIN;
 	}
 
-	public String getOrderId() {
+	public  String getOrderId() {
 		return orderId;
 	}
 

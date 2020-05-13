@@ -12,8 +12,9 @@ import javax.persistence.Table;
 @Table (name="Cancel_table")
 public class CancelDTO
 {
-
+	@Column(name="order_id")
 	private String orderid;
+	@Column(name="user_id")
 	private String userId;
 	@Column(name = "product_id")
 	private String productid;
@@ -21,6 +22,7 @@ public class CancelDTO
 	@Id
 	@Column(name = "product_uin")
 	private String productuin;
+	@Column(name="order_cancel_time")
 	private Date ordercanceltime;
 	
 	
