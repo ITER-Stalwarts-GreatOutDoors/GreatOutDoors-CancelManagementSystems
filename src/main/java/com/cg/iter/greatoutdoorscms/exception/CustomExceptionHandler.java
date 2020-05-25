@@ -3,10 +3,20 @@ package com.cg.iter.greatoutdoorscms.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
+//This class is NOT a controller, but an Assistant to ALL controller within Application
+@ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
+	
+	/** 
+	  * Capture all Exceptions of type ApplicationException,
+	  * and return a new HttpResponse
+	  */
+	
 	private long currentTimeMillis = System.currentTimeMillis();
 	private String errorMsg = "Some thing went wrong!";
 	
@@ -29,6 +39,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<ErrorMessage>(exceptionResponse,
 				new HttpHeaders(),HttpStatus.NOT_FOUND);
 	}
-	
+
 
 }

@@ -9,7 +9,9 @@ import com.cg.iter.greatoutdoorscms.dto.OrderProductMapDTO;
 public class Orders {
 
 	private List<OrderProductMapDTO> orders;
-
+  
+	
+	//Constructors
 	public Orders() {}
 
 	public Orders(List<OrderProductMapDTO> orders) {
@@ -17,6 +19,7 @@ public class Orders {
 		this.orders = orders;
 	}
 
+	//getter & Setter method
 	public List<OrderProductMapDTO> getOrders() {
 		return orders;
 	}

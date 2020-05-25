@@ -3,11 +3,17 @@ package com.cg.iter.greatoutdoorscms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import com.cg.iter.greatoutdoorscms.beans.ProductResponse;
 import com.cg.iter.greatoutdoorscms.exception.NullParameterException;
 import com.cg.iter.greatoutdoorscms.service.CancelService;
 
@@ -46,6 +52,11 @@ public class CancelController
 		cancelService.cancelProduct(orderId, userId, productId, quantity);
 	    return status;
 		
+	}
+
+	@GetMapping("/getCancelProducts")
+	List<ProductResponse> getResponseProducts(){
+		return cancelService.getResponseProducts();
 	}
    
 }
